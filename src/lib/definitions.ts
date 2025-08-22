@@ -10,7 +10,7 @@ export const createAdminSchema = object({
         .min(1, 'ErrorsZod.PasswordConfirmRequired')
 })
     .refine((data) => data.password === data.password_confirmation, {
-        message: "ErrorsZod.PasswordMatch",
+        message: 'ErrorsZod.PasswordMatch',
         path: ['password_confirmation']
     });
 
@@ -35,7 +35,7 @@ export function getSignUpUpdateSchema(formData: FormData) {
                 ctx.addIssue({
                     path: ['password_confirmation'],
                     code: 'custom',
-                    message: "ErrorsZod.PasswordMatch",
+                    message: 'ErrorsZod.PasswordMatch',
                 });
             }
         });
@@ -68,7 +68,7 @@ export const passwordUpdateSchema = object({
         .min(8, 'ErrorsZod.PasswordConfirmRequired')
 })
     .refine((data) => data.password === data.password_confirmation, {
-        message: "ErrorsZod.PasswordMatch",
+        message: 'ErrorsZod.PasswordMatch',
         path: ['password_confirmation']
     });
 
