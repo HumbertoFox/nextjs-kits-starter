@@ -12,7 +12,7 @@ export const transporter = nodemailer.createTransport({
 
 export const sendPasswordResetEmail = async (to: string, resetLink: string) => {
     await transporter.sendMail({
-        from: `'next-start-kit' <${process.env.SMTP_USER}>`,
+        from: `'next-kits-starter' <${process.env.SMTP_USER}>`,
         to,
         subject: 'Password Reset',
         html: `
@@ -26,7 +26,7 @@ export const sendPasswordResetEmail = async (to: string, resetLink: string) => {
 
 export const sendEmailVerification = async (to: string, link: string) => {
     await transporter.sendMail({
-        from: `'next-start-kit' <${process.env.SMTP_USER}>`,
+        from: `'next-kits-starter' <${process.env.SMTP_USER}>`,
         to,
         subject: 'Check your email',
         html: `
