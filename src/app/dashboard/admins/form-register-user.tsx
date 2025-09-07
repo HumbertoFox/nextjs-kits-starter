@@ -60,7 +60,7 @@ export default function RegisterUserForm({ user, isEdit, valueButton }: Register
         if (state?.message) {
             const { role } = data;
 
-            if (valueButton === 'Register') {
+            if (!isEdit) {
                 setData({
                     id: '',
                     name: '',
@@ -95,7 +95,7 @@ export default function RegisterUserForm({ user, isEdit, valueButton }: Register
                             onChange={handleChange}
                             disabled={pending}
                             readOnly
-                            placeholder="ID"
+                            placeholder={t('IdPlaceholder')}
                             className="cursor-default"
                         />
                     </div>
