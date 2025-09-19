@@ -29,6 +29,10 @@ export async function createUpdateAdminUser(state: FormStateCreateUpdateAdminUse
 
             if (!userInDb || userInDb.deletedAt) return { message: false };
 
+            const existingUser = await prisma.user.findUnique({ where: { email } });
+
+            if (existingUser && existingUser.id !== id) return { errors: { email: ['ErrorsZod.EmailAlreadyUse'] } };
+
             const hasChanges =
                 userInDb.name !== name ||
                 userInDb.email !== email ||
