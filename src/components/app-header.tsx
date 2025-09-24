@@ -36,7 +36,7 @@ export function AppHeader({ user }: { user: User }) {
         { title: t('Register'), href: '/dashboard/admins/register', icon: UserRoundPlus },
     ];
     const rightNavItems: NavItem[] = [
-        { title: t('Repository'), href: 'https://github.com/HumbertoFox/next-auth-start-kit', icon: Folder },
+        { title: t('Repository'), href: 'https://github.com/HumbertoFox/nextjs-kits-starter', icon: Folder },
         { title: t('Developer'), href: 'https://betofoxnet-info.vercel.app/', icon: BookOpen },
     ];
 
