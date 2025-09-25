@@ -40,8 +40,8 @@ export default async function Admins() {
                         <TableHeader>
                             <TableRow className="cursor-default">
                                 <TableHead className="text-center">{t('Index')}</TableHead>
-                                <TableHead className="text-center">{t('IdAdmin')}</TableHead>
-                                <TableHead className="text-center">{t('Name')}</TableHead>
+                                <TableHead className="text-center max-lg:hidden">{t('IdAdmin')}</TableHead>
+                                <TableHead className="text-center max-lg:hidden">{t('Name')}</TableHead>
                                 <TableHead className="text-center">{t('Email')}</TableHead>
                                 <TableHead className="text-center">{t('Actions')}</TableHead>
                             </TableRow>
@@ -54,11 +54,9 @@ export default async function Admins() {
                             )}
                             {admins.map((admin, index) => (
                                 <TableRow key={index} className="cursor-default">
-                                    <TableCell>
-                                        {index + 1}
-                                    </TableCell>
-                                    <TableCell>{admin.id}</TableCell>
-                                    <TableCell>{admin.name}</TableCell>
+                                    <TableCell>{index + 1}</TableCell>
+                                    <TableCell className="max-lg:hidden">{admin.id}</TableCell>
+                                    <TableCell className="max-lg:hidden">{admin.name}</TableCell>
                                     <TableCell>{admin.email}</TableCell>
                                     <TableCell className="flex justify-evenly items-center my-1">
                                         <Link
