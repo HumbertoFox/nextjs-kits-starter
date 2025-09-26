@@ -1,6 +1,6 @@
 'use client';
 
-import { SidebarGroup, SidebarGroupLabel, SidebarMenu, SidebarMenuButton, SidebarMenuItem } from '@/components/ui/sidebar';
+import { SidebarGroup, SidebarGroupLabel, SidebarMenu, SidebarMenuButton, SidebarMenuItem, useSidebar } from '@/components/ui/sidebar';
 import { type NavItem } from '@/types';
 import { useTranslations } from 'next-intl';
 import Link from 'next/link';
@@ -9,6 +9,13 @@ import { usePathname } from 'next/navigation';
 export function NavMain({ items = [] }: { items: NavItem[] }) {
     const pathname = usePathname();
     const t = useTranslations('NavMain');
+    const { isMobile, setOpenMobile } = useSidebar();
+
+    const handleLinkClick = (href: string) => {
+        if (isMobile && pathname !== href) {
+            setOpenMobile(false);
+        };
+    };
     return (
         <SidebarGroup className="px-2 py-0">
             <SidebarGroupLabel>{t('Platform')}</SidebarGroupLabel>
@@ -19,7 +26,7 @@ export function NavMain({ items = [] }: { items: NavItem[] }) {
                             asChild isActive={item.href === pathname}
                             tooltip={{ children: item.title }}
                         >
-                            <Link href={item.href} prefetch>
+                            <Link href={item.href} prefetch onClick={() => handleLinkClick(item.href)}>
                                 {item.icon && <item.icon />}
                                 <span>{item.title}</span>
                             </Link>
