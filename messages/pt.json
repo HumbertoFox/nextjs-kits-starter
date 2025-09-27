@@ -21,7 +21,8 @@
         }
     },
     "RegisterAdmin": {
-        "Title": "Criar uma conta",
+        "TitleAdmin": "Criar uma conta de Administrador(a)",
+        "TitleUser": "Criar uma conta de Usuário",
         "Description": "Insira seus dados abaixo para criar sua conta",
         "NameLabel": "Nome",
         "NamePlaceholder": "Nome completo",
@@ -46,7 +47,8 @@
             "PasswordMatch": "As senhas não correspondem"
         },
         "Metadata": {
-            "Title": "Cadastrar Administrador"
+            "TitleAdmin": "Cadastrar Administrador",
+            "TitleUser": "Cadastrar Usuário"
         }
     },
     "Login": {

@@ -21,7 +21,8 @@
         }
     },
     "RegisterAdmin": {
-        "Title": "Create an account",
+        "TitleAdmin": "Create an Administrator account",
+        "TitleUser": "Create a User Account",
         "Description": "Enter your details below to create your account",
         "NameLabel": "Name",
         "NamePlaceholder": "Full name",
@@ -46,7 +47,8 @@
             "PasswordMatch": "Passwords don't match"
         },
         "Metadata": {
-            "Title": "Register Admin"
+            "TitleAdmin": "Register Admin",
+            "TitleUser": "Register User"
         }
     },
     "Login": {

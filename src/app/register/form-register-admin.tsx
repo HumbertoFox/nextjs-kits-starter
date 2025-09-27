@@ -20,7 +20,7 @@ type RegisterForm = {
     password_confirmation: string;
 };
 
-export default function RegisterAdmin() {
+export default function RegisterAdmin({ TitleIntl }: { TitleIntl: string }) {
     const t = useTranslations('RegisterAdmin');
     const emailRef = useRef<HTMLInputElement>(null);
     const router = useRouter();
@@ -59,7 +59,7 @@ export default function RegisterAdmin() {
         };
     }, [state, router]);
     return (
-        <AuthLayout title={t('Title')} description={t('Description')}>
+        <AuthLayout title={t(TitleIntl)} description={t('Description')}>
             <form className="flex flex-col gap-6" onSubmit={submit}>
                 <div className="grid gap-6">
                     <div className="grid gap-2">
