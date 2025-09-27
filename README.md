@@ -772,19 +772,18 @@ The middleware function restricts access to protected routes like `/dashboard` a
 
 ```ts
 
-const protectedRoutes = ['/dashboard'];
-const publicRoutes = ['/login', '/'];
-
 export default async function middleware(req: NextRequest) {
   const path = req.nextUrl.pathname;
-  const isProtectedRoute = protectedRoutes.includes(path);
-  const isPublicRoute = publicRoutes.includes(path);
+
+  const isProtectedRoute = path.startsWith('/dashboard');
+  const isAdminRoute = path.startsWith('/dashboard/admins');
+  const isPublicRoute = ['/login', '/', '/register'].includes(path);
 
   const session = await updateSession();
 
   // 🔒 Redirect unauthenticated users from protected routes
   if (isProtectedRoute && !session?.userId) {
-    return NextResponse.redirect(new URL('/login', req.nextUrl));
+    return NextResponse.redirect(new URL(`/login?redirect=${encodeURIComponent(path)}`, req.nextUrl));
   }
 
   // 🔁 Redirect authenticated users away from public routes
@@ -793,7 +792,7 @@ export default async function middleware(req: NextRequest) {
   }
 
   // 🛑 Only allow ADMIN users to access /dashboard/admins
-  if (path.startsWith('/dashboard/admins') && session?.role !== 'ADMIN') {
+  if (isAdminRoute && session?.role !== 'ADMIN') {
     return NextResponse.redirect(new URL('/dashboard', req.nextUrl));
   }
 
