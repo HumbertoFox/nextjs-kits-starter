@@ -16,7 +16,7 @@ export const sendPasswordResetEmail = async (to: string, resetLink: string) => {
     await transporter.sendMail({
         from: `'next-kits-starter' <${process.env.SMTP_USER}>`,
         to,
-        subject: `${t('Subject')}`,
+        subject: `${t('SubjectPassword')}`,
         html: `
         <p>${t('ParagrafPasswordOne')}</p>
         <p>${t('ParagrafPasswordTwo')}</p>
