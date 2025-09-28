@@ -876,44 +876,34 @@ export const getUser = cache(async () => {
 
 ---
 
-# 🌐 3. middleware.ts – Route Protection
+# 🛡️ 3. middleware.ts – Route Protection with JWT and Role-Based Access
 
-This middleware handles redirection based on whether the user is authenticated.
+This middleware protects routes based on session presence and user role.
+
+## 📄 Middleware Code (Latest Version)
 
 ```ts
 
 import { NextRequest, NextResponse } from 'next/server';
 import { updateSession } from './lib/session';
 
-```
-
----
-
-# 🚧 Middleware Logic
-The middleware function restricts access to protected routes like `/dashboard` and ensures only `ADMIN` users can access `/dashboard/admins`.
-
-```ts
-
 export default async function middleware(req: NextRequest) {
   const path = req.nextUrl.pathname;
 
   const isProtectedRoute = path.startsWith('/dashboard');
   const isAdminRoute = path.startsWith('/dashboard/admins');
-  const isPublicRoute = ['/login', '/', '/register'].includes(path);
+  const isPublicRoute = ['/login', '/'].includes(path);
 
   const session = await updateSession();
 
-  // 🔒 Redirect unauthenticated users from protected routes
   if (isProtectedRoute && !session?.userId) {
     return NextResponse.redirect(new URL(`/login?redirect=${encodeURIComponent(path)}`, req.nextUrl));
   }
 
-  // 🔁 Redirect authenticated users away from public routes
   if (isPublicRoute && session?.userId && !path.startsWith('/dashboard')) {
     return NextResponse.redirect(new URL('/dashboard', req.nextUrl));
   }
 
-  // 🛑 Only allow ADMIN users to access /dashboard/admins
   if (isAdminRoute && session?.role !== 'ADMIN') {
     return NextResponse.redirect(new URL('/dashboard', req.nextUrl));
   }
@@ -921,35 +911,41 @@ export default async function middleware(req: NextRequest) {
   return NextResponse.next();
 }
 
+export const config = {
+  matcher: ['/((?!api|_next/static|_next/image|favicon.ico|sitemap.xml|robots.txt|videos/).*)']
+};
+
 
 ```
 
 ---
 
-# 🔄 middleware(req: NextRequest)
+## 🔍 Route Behavior Overview
 
-- Redirects unauthenticated users away from protected routes
-
-- Prevents logged-in users from visiting public routes like /login
-
-```ts
-
-export default async function middleware(req: NextRequest) { ... }
-
-```
+| Route       | Type                             | Condition	Behavior                                          |
+|-------------|----------------------------------|--------------------------------------------------------------|
+| Public	    | `/login`, `/`, `/register`       | Redirects to `/dashboard` if session exists                  |
+| Protected	  | Routes under `/dashboard`	       | Requires valid session (`userId`) or redirects to login      |
+| Admin-only	| Routes under `/dashboard/admins` | Requires role = `'ADMIN'`, otherwise redirects to `/dashboa` |
 
 ---
 
-# 🎯 Matcher Configuration
+# ⚙️ Middleware Matcher
 This config ensures the middleware only runs on relevant routes, skipping static assets and API endpoints:
 
 ```ts
 
 export const config = {
-  matcher: ['/((?!api|_next/static|_next/image|favicon.ico|sitemap.xml|robots.txt|videos/).*)']
-}
+  matcher: [
+    '/((?!api|_next/static|_next/image|favicon.ico|sitemap.xml|robots.txt|videos/).*)',
+  ],
+};
 
 ```
+
+- <strong>Excludes</strong>: API routes, Next.js static assets, media, and SEO files
+
+- <strong>Applies to</strong>: All other pages (including dynamic ones)
 
 ---
 
