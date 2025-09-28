@@ -1,3 +1,4 @@
+import { getTranslations } from 'next-intl/server';
 import nodemailer from 'nodemailer';
 
 export const transporter = nodemailer.createTransport({
@@ -11,29 +12,31 @@ export const transporter = nodemailer.createTransport({
 });
 
 export const sendPasswordResetEmail = async (to: string, resetLink: string) => {
+    const t = await getTranslations('ResetPasswordClient');
     await transporter.sendMail({
         from: `'next-kits-starter' <${process.env.SMTP_USER}>`,
         to,
-        subject: 'Password Reset',
+        subject: `${t('Subject')}`,
         html: `
-        <p>You have requested a password reset.</p>
-        <p>Click the link below to create a new password:</p>
+        <p>${t('ParagrafPasswordOne')}</p>
+        <p>${t('ParagrafPasswordTwo')}</p>
         <a href='${resetLink}'>${resetLink}</a>
-        <p>If you did not request this, please ignore this email.</p>
+        <p>${t('ParagrafPasswordThree')}</p>
         `,
     });
 };
 
 export const sendEmailVerification = async (to: string, link: string) => {
+    const t = await getTranslations('VerifyEmail');
     await transporter.sendMail({
         from: `'next-kits-starter' <${process.env.SMTP_USER}>`,
         to,
-        subject: 'Check your email',
+        subject: `${t('SubjectEmail')}`,
         html: `
-        <h2>Email Confirmation</h2>
-        <p>Please click the link below to confirm your email:</p>
+        <h2>${t('TextH2EmailOne')}</h2>
+        <p>${t('ParagrafEmailOne')}</p>
         <a href='${link}'>${link}</a>
-        <p>If you did not request this, you can ignore this email.</p>
+        <p>${t('ParagrafEmailTwo')}</p>
         `,
     });
 };

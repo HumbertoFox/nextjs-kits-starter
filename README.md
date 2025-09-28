@@ -522,7 +522,6 @@ const withNextIntl = createNextIntlPlugin();
 
 export default withNextIntl(nextConfig);
 
-
 ```
 
 ---
@@ -1029,6 +1028,165 @@ This setup provides:
 - Prisma-based user management
 
 - Automatic session renewal
+
+---
+
+## 📧 Email Verification & Password Reset System (Next.js + Prisma + Zod + Nodemailer)
+
+This project includes a fully functional <strong>email verification</strong> and <strong>password reset</strong> system, built with <strong>Next.js App Router</strong>, <strong>Prisma</strong>, <strong>Zod</strong>, <strong>Nodemailer</strong>, and <strong>crypto</strong>.
+
+# 🔒 Features
+
+## ✅ Email Verification on Signup
+
+- After registering, a verification link is sent to the user’s email.
+
+- The link is valid for 24 hours.
+
+- If the token expires, a new email is automatically sent.
+
+## 🔁 Resend Email Verification
+
+- Unverified users can request a new verification email.
+
+- A new token is generated and sent, valid for 7 days.
+
+## 🔐 Password Reset
+
+- Users can request a password reset by entering their email.
+
+- A secure reset link is sent, valid for 1 hour.
+
+- Once the password is updated, the token is invalidated.
+
+# 🧠 Core Logic
+
+## 🔍 Automatic Email Verification Check
+
+```ts
+
+const email = sessionUser.email;
+const tokenExisting = await prisma.verificationToken.findFirst({ where: { identifier: email } });
+
+if (!isCheckedEmail?.emailVerified) {
+  if (!tokenExisting || new Date() > tokenExisting.expires) {
+    // Generate new token and send verification email
+  }
+}
+
+```
+
+## 🔁 Resend Email Verification
+
+```ts
+
+if (tokenExisting && new Date() > tokenExisting.expires) {
+  // Delete old token
+  // Generate and send a new one
+}
+
+```
+
+## 📩 Sending Emails (Nodemailer + next-intl)
+
+```ts
+
+await transporter.sendMail({
+  from: `'next-kits-starter' <${process.env.SMTP_USER}>`,
+  to,
+  subject: 'Check your email',
+  html: `
+    <h2>Email Confirmation</h2>
+    <p>Please click the link below to confirm your email:</p>
+    <a href='${link}'>${link}</a>
+  `
+});
+
+```
+
+## 🔁 Forgot Password Logic
+
+```ts
+
+const token = crypto.randomBytes(32).toString('hex');
+const expires = new Date(Date.now() + 60 * 60 * 1000); // 1 hour
+
+await prisma.verificationToken.create({ data: { identifier: email, token, expires } });
+
+const resetLink = `${process.env.NEXT_URL}/auth/reset-password?token=${token}&email=${email}`;
+await sendPasswordResetEmail(email, resetLink);
+
+```
+
+## 🔐 Password Reset with Token
+
+```ts
+
+const tokenExisting = await prisma.verificationToken.findUnique({
+  where: { identifier_token: { identifier: email, token } }
+});
+
+if (!tokenExisting || tokenExisting.expires < new Date()) {
+  return { warning: 'Warning' };
+}
+
+const hashedPassword = await hash(password, 12);
+
+await prisma.user.update({ where: { email }, data: { password: hashedPassword } });
+
+await prisma.verificationToken.delete({ where: { identifier_token: { identifier: email, token } } });
+
+```
+
+## 💾 Related Folder Structure
+
+```bash
+
+/app
+  /auth
+    └── verify-email.tsx         # Email verification page
+    └── reset-password.tsx       # Password reset page
+
+/app/api/actions
+  └── emailVerifiedChecked.ts    # Check if email is verified
+  └── forgotPassword.ts          # Send reset link
+  └── resetPassword.ts           # Update password logic
+  └── handleEmailVerification.ts # Verify and confirm email
+
+/lib
+  └── mail.ts                    # Email configuration and transport
+  └── definitions.ts             # Zod schema validation
+
+```
+
+## 🌍 Email Translation (via next-intl)
+
+Supports localized messages using the `next-intl` library. Example:
+
+```json
+
+"VerifyEmail": {
+  "SubjectEmail": "Check your email",
+  "TextH2EmailOne": "Email Confirmation",
+  "ParagrafEmailOne": "Please click the link below to confirm your email:",
+  "ParagrafEmailTwo": "If you did not request this, you can ignore this email."
+}
+
+```
+
+## ⚙️ Environment Variables Required
+
+Add the following to your `.env` file:
+
+```env
+
+NEXT_URL=http://localhost:3000
+SMTP_HOST=smtp.example.com
+SMTP_PORT=587
+SMTP_USER=your_email@example.com
+SMTP_PASS=your_password
+
+```
 
 ---
 

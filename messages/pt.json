@@ -104,6 +104,10 @@
         "Submit": "Redefinir senha",
         "Warning": "Token inválido ou expirado.",
         "Message": "Senha redefinida com sucesso!",
+        "SubjectPassword": "Redefinição de senha",
+        "ParagrafPasswordOne": "Você solicitou uma redefinição de senha.",
+        "ParagrafPasswordTwo": "Clique no link abaixo para criar uma nova senha:",
+        "ParagrafPasswordThree": "Se você não solicitou isso, ignore este e-mail.",
         "ErrorsZod": {
             "EmailInvalid": "E-mail inválido",
             "TokenRequired": "Token é necessário",
@@ -128,7 +132,11 @@
         "LinkLogin": "Conecte-se",
         "ErrorOne": "Não autenticado",
         "ErrorTow": "e-mail já verificado!",
-        "Success": "Por favor, verifique seu e-mail."
+        "Success": "Por favor, verifique seu e-mail.",
+        "SubjectEmail": "Verifique seu e-mail",
+        "TextH2EmailOne": "Confirmação por e-mail",
+        "ParagrafEmailOne": "Clique no link abaixo para confirmar seu e-mail:",
+        "ParagrafEmailTwo": "Se você não solicitou isso, pode ignorar este e-mail."
     },
     "AppSidebar": {
         "Dashboard": "Painel",

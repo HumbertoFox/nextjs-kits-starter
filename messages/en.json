@@ -104,6 +104,10 @@
         "Submit": "Reset password",
         "Warning": "Invalid or expired token.",
         "Message": "Password reset successfully!",
+        "SubjectPassword": "Password Reset",
+        "ParagrafPasswordOne": "You have requested a password reset.",
+        "ParagrafPasswordTwo": "Click the link below to create a new password:",
+        "ParagrafPasswordThree": "If you did not request this, please ignore this email.",
         "ErrorsZod": {
             "EmailInvalid": "Invalid email",
             "TokenRequired": "Token is required",
@@ -128,7 +132,11 @@
         "LinkLogin": "Log in",
         "ErrorOne": "Not authenticated",
         "ErrorTow": "email already verified!",
-        "Success": "Please check your email."
+        "Success": "Please check your email.",
+        "SubjectEmail": "Check your email",
+        "TextH2EmailOne": "Email Confirmation",
+        "ParagrafEmailOne": "Please click the link below to confirm your email:",
+        "ParagrafEmailTwo": "If you did not request this, you can ignore this email."
     },
     "AppSidebar": {
         "Dashboard": "Dashboard",
