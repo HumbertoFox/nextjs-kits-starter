@@ -132,7 +132,7 @@
         "LinkLogin": "Log in",
         "ErrorOne": "Not authenticated",
         "ErrorTow": "email already verified!",
-        "Success": "Please check your email.",
+        "Success": "Email, verified!",
         "SubjectEmail": "Check your email",
         "TextH2EmailOne": "Email Confirmation",
         "ParagrafEmailOne": "Please click the link below to confirm your email:",
