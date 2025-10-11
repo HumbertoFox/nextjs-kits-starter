@@ -4,7 +4,6 @@
 
 # BetoFoxNet
 
-
   <a href="https://nextjs.org/"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/nextjs/nextjs-original.svg" width="130px" alt="Icon NextJs" /></a>
 
 ## About NextJS
@@ -17,7 +16,8 @@
 </div>
 
 ## 👤 Admin Registration Page (Next.js + Prisma)
-This project includes a protected admin registration page. The form is only accessible if no admin user exists yet in the database. It’s built with Next.js App Router, Prisma, bcrypt-ts, React Hooks, and Zod validation.
+This project includes a protected admin registration page. The form is accessible if there is no administrator user in the database, the first User created is with the `"ADMIN"` role and the next ones will be `"USER"`.
+It’s built with Next.js App Router, Prisma, bcrypt-ts, React Hooks, shadcn-ui, and Zod validation.
 
 ## 📁 File Structure
 

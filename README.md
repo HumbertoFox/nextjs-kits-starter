@@ -16,7 +16,8 @@
 </div>
 
 ## 👤 Página de Registro de Administrador (Next.js + Prisma)
-Este projeto inclui uma página de registro de administrador protegida. O formulário só é acessível se ainda não houver um usuário administrador no banco de dados. Ele foi criado com Next.js App Router, Prisma, bcrypt-ts, React Hooks e validação Zod.
+Este projeto inclui uma página de registro de administrador protegida. O formulário é acessível se não houver um usuário administrador no banco de dados o primeiro Usuário criado é com o `role` `"ADMIN"` e os próximos seram `"USER"`.
+Ele foi criado com Next.js App Router, Prisma, bcrypt-ts, React Hooks, shadcn-ui e validação Zod.
 
 ## 📁 Estrutura de Arquivos
 
