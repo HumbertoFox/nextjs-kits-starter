@@ -117,13 +117,6 @@
             "PasswordMatch": "As senhas não correspondem"
         }
     },
-    "ConfirmPassword": {
-        "Title": "Confirme sua senha",
-        "Description": "Esta é uma área segura do aplicativo. Confirme sua senha antes de continuar.",
-        "PasswordLabel": "Senha",
-        "PasswordPlaceholder": "Senha",
-        "Submit": "Confirme sua senha"
-    },
     "VerifyEmail": {
         "Title": "Verificar e-mail",
         "Description": "Verifique seu endereço de e-mail clicando no link que acabamos de enviar para você.",

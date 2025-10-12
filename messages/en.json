@@ -117,13 +117,6 @@
             "PasswordMatch": "Passwords don't match"
         }
     },
-    "ConfirmPassword": {
-        "Title": "Confirm your password",
-        "Description": "This is a secure area of the application. Please confirm your password before continuing.",
-        "PasswordLabel": "Password",
-        "PasswordPlaceholder": "Password",
-        "Submit": "Confirm password"
-    },
     "VerifyEmail": {
         "Title": "Verify email",
         "Description": "Please verify your email address by clicking on the link we just emailed to you.",
