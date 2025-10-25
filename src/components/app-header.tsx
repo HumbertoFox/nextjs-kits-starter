@@ -20,7 +20,7 @@ import { usePathname } from 'next/navigation';
 import { useTranslations } from 'next-intl';
 import { useState } from 'react';
 
-const activeItemStyles = 'text-neutral-900 dark:bg-neutral-800 dark:text-neutral-100';
+const activeItemStyles = 'text-neutral-900 bg-accent dark:bg-neutral-800 dark:text-neutral-100';
 
 export function AppHeader({ user }: { user: User }) {
     const [isOpen, setIsOpen] = useState(false);
