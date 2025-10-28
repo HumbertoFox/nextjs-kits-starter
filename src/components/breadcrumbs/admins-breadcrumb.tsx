@@ -4,7 +4,7 @@ import { useEffect } from 'react';
 import { useBreadcrumbs } from '@/context/breadcrumb-context';
 import { useTranslations } from 'next-intl';
 
-export default function AdminsBreadcrumbs() {
+export default function AdminsBreadcrumb() {
     const { setBreadcrumbs } = useBreadcrumbs();
     const tb = useTranslations('Breadcrumb');
     useEffect(() => {
