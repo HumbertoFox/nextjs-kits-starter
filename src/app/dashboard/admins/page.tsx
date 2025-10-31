@@ -1,9 +1,10 @@
 import { Button } from '@/components/ui/button';
 import { Dialog, DialogClose, DialogContent, DialogDescription, DialogFooter, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
+import { reactivateAdminUserById } from '@/app/api/actions/reactivateadminuser';
 import { Icon } from '@/components/ui/icon';
 import { PlaceholderPattern } from '@/components/ui/placeholder-pattern';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
-import { UserRoundPen, UserRoundX } from 'lucide-react';
+import { UserLock, UserRoundPen, UserRoundX } from 'lucide-react';
 import Link from 'next/link';
 import AdminsBreadcrumb from '@/components/breadcrumbs/admins-breadcrumb';
 import prisma from '@/lib/prisma';
@@ -22,7 +23,7 @@ export const generateMetadata = async (): Promise<Metadata> => {
 export default async function Admins() {
     const session = await getUser();
     const loggedAdmin = session?.id;
-    const admins = await prisma.user.findMany({ where: { role: 'ADMIN', deletedAt: null }, select: { id: true, name: true, email: true } });
+    const admins = await prisma.user.findMany({ where: { role: 'ADMIN', }, select: { id: true, name: true, email: true, deletedAt: true } });
     const t = await getTranslations('Admins');
     return (
         <>
@@ -59,54 +60,73 @@ export default async function Admins() {
                                     <TableCell className="max-lg:hidden">{admin.name}</TableCell>
                                     <TableCell>{admin.email}</TableCell>
                                     <TableCell className="flex justify-evenly items-center my-1">
-                                        <Link
-                                            href={admin.id === loggedAdmin ? '/dashboard/settings/profile' : `/dashboard/admins/${admin.id}/update`}
-                                            title={`${t('LinkTitle')} ${admin.name}`}
-                                        >
-                                            <Icon
-                                                iconNode={UserRoundPen}
-                                                aria-label={`${t('AriaLabelIcon')} ${admin.name}`}
-                                                className="size-6 text-yellow-600 hover:text-yellow-500 duration-300"
-                                            />
-                                        </Link>
+                                        {!admin.deletedAt ? (
+                                            <>
+                                                <Link
+                                                    href={admin.id === loggedAdmin ? '/dashboard/settings/profile' : `/dashboard/admins/${admin.id}/update`}
+                                                    title={`${t('LinkTitle')} ${admin.name}`}
+                                                >
+                                                    <Icon
+                                                        iconNode={UserRoundPen}
+                                                        aria-label={`${t('AriaLabelIcon')} ${admin.name}`}
+                                                        className="size-6 text-yellow-600 hover:text-yellow-500 duration-300"
+                                                    />
+                                                </Link>
 
-                                        <Dialog>
-                                            <DialogTrigger asChild>
-                                                {admin.id !== loggedAdmin && (
-                                                    <button type="button" title={`${t('DialogButtonTitle')} ${admin.name}`}>
-                                                        <Icon
-                                                            iconNode={UserRoundX}
-                                                            aria-label={`${t('DialogButtonAreaLabel')} ${admin.name}`}
-                                                            className="size-6 text-red-600 cursor-pointer hover:text-red-500 duration-300"
-                                                        />
-                                                    </button>
-                                                )}
-                                            </DialogTrigger>
-                                            <DialogContent>
-                                                <DialogTitle>
-                                                    {t('DialogTitle')}
-                                                </DialogTitle>
-                                                <DialogDescription>
-                                                    {t('DialogDescription')}
-                                                </DialogDescription>
-                                                <DialogFooter>
-                                                    <DialogClose asChild>
-                                                        <Button type="button" variant="secondary">
-                                                            {t('DialogButtonCancel')}
-                                                        </Button>
-                                                    </DialogClose>
-                                                    <form action={deleteUserById}>
-                                                        <input type="hidden" name="userId" value={admin.id} />
-                                                        <Button
-                                                            type="submit"
-                                                            variant="destructive"
-                                                        >
-                                                            {t('DialogButtonSubmit')}
-                                                        </Button>
-                                                    </form>
-                                                </DialogFooter>
-                                            </DialogContent>
-                                        </Dialog>
+                                                <Dialog key={admin.id}>
+                                                    <DialogTrigger asChild>
+                                                        {admin.id !== loggedAdmin && (
+                                                            <button type="button" title={`${t('DialogButtonTitle')} ${admin.name}`}>
+                                                                <Icon
+                                                                    iconNode={UserRoundX}
+                                                                    aria-label={`${t('DialogButtonAreaLabel')} ${admin.name}`}
+                                                                    className="size-6 text-red-600 cursor-pointer hover:text-red-500 duration-300"
+                                                                />
+                                                            </button>
+                                                        )}
+                                                    </DialogTrigger>
+                                                    <DialogContent>
+                                                        <DialogTitle>
+                                                            {t('DialogTitle')}
+                                                        </DialogTitle>
+                                                        <DialogDescription>
+                                                            {t('DialogDescription')}
+                                                        </DialogDescription>
+                                                        <DialogFooter>
+                                                            <DialogClose asChild>
+                                                                <Button type="button" variant="secondary">
+                                                                    {t('DialogButtonCancel')}
+                                                                </Button>
+                                                            </DialogClose>
+                                                            <form action={deleteUserById}>
+                                                                <input type="hidden" name="userId" value={admin.id} />
+                                                                <Button
+                                                                    type="submit"
+                                                                    variant="destructive"
+                                                                >
+                                                                    {t('DialogButtonSubmit')}
+                                                                </Button>
+                                                            </form>
+                                                        </DialogFooter>
+                                                    </DialogContent>
+                                                </Dialog>
+                                            </>
+                                        ) : (
+                                            <form action={reactivateAdminUserById}>
+                                                <input type="hidden" name="userId" value={admin.id} />
+                                                <button
+                                                    type="submit"
+                                                    title={`Ativar ${admin.name}`}
+                                                    className="cursor-pointer"
+                                                >
+                                                    <Icon
+                                                        iconNode={UserLock}
+                                                        aria-label={`Arivar ${admin.name}`}
+                                                        className="size-6 text-red-600 hover:text-green-500 duration-300"
+                                                    />
+                                                </button>
+                                            </form>
+                                        )}
                                     </TableCell>
                                 </TableRow>
                             ))}
