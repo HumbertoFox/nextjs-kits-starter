@@ -82,7 +82,7 @@ export default function ProfilePageClient({ name, email, mustVerifyEmail }: Prop
                             autoComplete="name"
                             placeholder={t('NamePlaceholder')}
                         />
-                        {state?.errors?.name && <InputError message={t(state.errors.name[0])} />}
+                        {state?.errors?.name?.[0] && <InputError message={t(state.errors.name[0])} />}
                     </div>
 
                     <div className="grid gap-2">
@@ -98,7 +98,7 @@ export default function ProfilePageClient({ name, email, mustVerifyEmail }: Prop
                             autoComplete="email"
                             placeholder={t('EmailPlaceholder')}
                         />
-                        {state?.errors?.email && <InputError message={t(state.errors.email[0])} />}
+                        {state?.errors?.email?.[0] && <InputError message={t(state.errors.email[0])} />}
                     </div>
 
                     {mustVerifyEmail && (

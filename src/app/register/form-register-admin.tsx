@@ -77,7 +77,7 @@ export default function RegisterAdmin({ TitleIntl }: { TitleIntl: string }) {
                             disabled={pending}
                             placeholder={t('NamePlaceholder')}
                         />
-                        {state?.errors?.name && <InputError message={t(state.errors.name[0])} />}
+                        {state?.errors?.name?.[0] && <InputError message={t(state.errors.name[0])} />}
                     </div>
 
                     <div className="grid gap-2">
@@ -95,7 +95,7 @@ export default function RegisterAdmin({ TitleIntl }: { TitleIntl: string }) {
                             disabled={pending}
                             placeholder={t('EmailPlaceholder')}
                         />
-                        {state?.errors?.email && <InputError message={t(state.errors.email[0])} />}
+                        {state?.errors?.email?.[0] && <InputError message={t(state.errors.email[0])} />}
                     </div>
 
                     <div className="grid gap-2">
@@ -121,7 +121,7 @@ export default function RegisterAdmin({ TitleIntl }: { TitleIntl: string }) {
                                 {showPassword ? <Icon iconNode={Eye} /> : <Icon iconNode={EyeClosed} />}
                             </button>
                         </div>
-                        {state?.errors?.password && <InputError message={t(state.errors.password[0])} />}
+                        {state?.errors?.password?.[0] && <InputError message={t(state.errors.password[0])} />}
                     </div>
 
                     <div className="grid gap-2">
@@ -147,7 +147,7 @@ export default function RegisterAdmin({ TitleIntl }: { TitleIntl: string }) {
                                 {showPasswordConfirm ? <Icon iconNode={Eye} /> : <Icon iconNode={EyeClosed} />}
                             </button>
                         </div>
-                        {state?.errors?.password_confirmation && <InputError message={t(state.errors.password_confirmation[0])} />}
+                        {state?.errors?.password_confirmation?.[0] && <InputError message={t(state.errors.password_confirmation[0])} />}
                     </div>
 
                     <Button type="submit" className="mt-2 w-full" tabIndex={6} disabled={pending} aria-busy={pending}>

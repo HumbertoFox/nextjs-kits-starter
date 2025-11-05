@@ -44,7 +44,7 @@ export default function ForgotPassword() {
                             placeholder={t('EmailPlaceholder')}
                             required
                         />
-                        {state?.errors?.email && <InputError message={t(state.errors.email[0])} />}
+                        {state?.errors?.email?.[0] && <InputError message={t(state.errors.email[0])} />}
                     </div>
 
                     <div className="my-6 flex items-center justify-start">

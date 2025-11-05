@@ -71,7 +71,7 @@ export default function ResetPasswordClient() {
                             onChange={handleChange}
                             required
                         />
-                        {state?.errors?.email && <InputError message={t(state.errors.email[0])} />}
+                        {state?.errors?.email?.[0] && <InputError message={t(state.errors.email[0])} />}
                     </div>
 
                     <div className="grid gap-2">
@@ -97,7 +97,7 @@ export default function ResetPasswordClient() {
                                 {showPassword ? <Icon iconNode={Eye} /> : <Icon iconNode={EyeClosed} />}
                             </button>
                         </div>
-                        {state?.errors?.password && <InputError message={t(state.errors.password[0])} />}
+                        {state?.errors?.password?.[0] && <InputError message={t(state.errors.password[0])} />}
                     </div>
 
                     <div className="grid gap-2">
@@ -123,7 +123,7 @@ export default function ResetPasswordClient() {
                                 {showPasswordConfirm ? <Icon iconNode={Eye} /> : <Icon iconNode={EyeClosed} />}
                             </button>
                         </div>
-                        {state?.errors?.password_confirmation && <InputError message={t(state.errors.password_confirmation[0])} />}
+                        {state?.errors?.password_confirmation?.[0] && <InputError message={t(state.errors.password_confirmation[0])} />}
                     </div>
 
                     <input type="hidden" name="token" value={data.token} />

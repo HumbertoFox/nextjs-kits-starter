@@ -80,7 +80,7 @@ export default function DeleteUser() {
                                         {showPassword ? <Icon iconNode={Eye} /> : <Icon iconNode={EyeClosed} />}
                                     </button>
                                 </div>
-                                {state?.errors?.password && <InputError message={t(state.errors.password[0])} />}
+                                {state?.errors?.password?.[0] && <InputError message={t(state.errors.password[0])} />}
                             </div>
 
                             <DialogFooter className="gap-2">
