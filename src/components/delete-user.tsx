@@ -74,8 +74,9 @@ export default function DeleteUser() {
                                     />
                                     <button
                                         type="button"
-                                        className="btn-icon-toggle"
+                                        title={showPassword ? t("HidePassword") : t("ShowPassword")}
                                         onClick={toggleShowPassword}
+                                        className="btn-icon-toggle"
                                     >
                                         {showPassword ? <Icon iconNode={Eye} /> : <Icon iconNode={EyeClosed} />}
                                     </button>

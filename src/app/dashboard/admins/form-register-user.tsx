@@ -152,8 +152,9 @@ export default function RegisterUserForm({ user, isEdit, valueButton }: Register
                         />
                         <button
                             type="button"
-                            className="btn-icon-toggle"
+                            title={showPassword ? t("HidePassword") : t("ShowPassword")}
                             onClick={toggleShowPassword}
+                            className="btn-icon-toggle"
                         >
                             {showPassword ? <Icon iconNode={Eye} /> : <Icon iconNode={EyeClosed} />}
                         </button>
@@ -177,8 +178,9 @@ export default function RegisterUserForm({ user, isEdit, valueButton }: Register
                         />
                         <button
                             type="button"
-                            className="btn-icon-toggle"
+                            title={showPasswordConfirm ? t("HidePassword") : t("ShowPassword")}
                             onClick={toggleShowPasswordConfirm}
+                            className="btn-icon-toggle"
                         >
                             {showPasswordConfirm ? <Icon iconNode={Eye} /> : <Icon iconNode={EyeClosed} />}
                         </button>

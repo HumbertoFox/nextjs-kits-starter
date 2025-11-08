@@ -1,12 +1,12 @@
-import { z, object, string, email } from 'zod';
+import * as z from 'zod';
 
-export const createAdminSchema = object({
-    name: string()
+export const createAdminSchema = z.object({
+    name: z.string()
         .min(1, 'ErrorsZod.NameRequired'),
-    email: email('ErrorsZod.EmailInvalid'),
-    password: string()
+    email: z.email('ErrorsZod.EmailInvalid'),
+    password: z.string()
         .min(8, 'ErrorsZod.PasswordMin'),
-    password_confirmation: string()
+    password_confirmation: z.string()
         .min(1, 'ErrorsZod.PasswordConfirmRequired')
 })
     .refine((data) => data.password === data.password_confirmation, {
@@ -17,15 +17,15 @@ export const createAdminSchema = object({
 export function getSignUpUpdateSchema(formData: FormData) {
     const isEdit = Boolean(formData.get('id'));
 
-    return object({
-        name: string().min(1, 'ErrorsZod.NameRequired'),
-        email: email('ErrorsZod.EmailInvalid'),
+    return z.object({
+        name: z.string().min(1, 'ErrorsZod.NameRequired'),
+        email: z.email('ErrorsZod.EmailInvalid'),
         password: isEdit
-            ? string().optional()
-            : string().min(8, 'ErrorsZod.PasswordMin'),
+            ? z.string().optional()
+            : z.string().min(8, 'ErrorsZod.PasswordMin'),
         password_confirmation: isEdit
-            ? string().optional()
-            : string().min(1, 'ErrorsZod.PasswordConfirmRequired'),
+            ? z.string().optional()
+            : z.string().min(1, 'ErrorsZod.PasswordConfirmRequired'),
         role: z.enum(['ADMIN', 'USER'], {
             error: 'ErrorsZod.RoleRequiredAdminUser'
         })
@@ -41,30 +41,30 @@ export function getSignUpUpdateSchema(formData: FormData) {
         });
 }
 
-export const signInSchema = object({
-    email: email('ErrorsZod.EmailInvalid'),
-    password: string()
+export const signInSchema = z.object({
+    email: z.email('ErrorsZod.EmailInvalid'),
+    password: z.string()
         .min(8, 'ErrorsZod.PasswordRequired')
         .max(32, 'ErrorsZod.PasswordMax')
 })
 
-export const updateUserSchema = object({
-    name: string()
+export const updateUserSchema = z.object({
+    name: z.string()
         .min(1, 'ErrorsZod.NameRequired'),
-    email: email('ErrorsZod.EmailInvalid')
+    email: z.email('ErrorsZod.EmailInvalid')
 })
 
-export const deleteUserSchema = object({
-    password: string()
+export const deleteUserSchema = z.object({
+    password: z.string()
         .min(8, 'ErrorsZod.PasswordMin')
 })
 
-export const passwordUpdateSchema = object({
-    current_password: string()
+export const passwordUpdateSchema = z.object({
+    current_password: z.string()
         .min(8, 'ErrorsZod.PasswordCurrentMin'),
-    password: string()
+    password: z.string()
         .min(8, 'ErrorsZod.PasswordMin'),
-    password_confirmation: string()
+    password_confirmation: z.string()
         .min(8, 'ErrorsZod.PasswordConfirmRequired')
 })
     .refine((data) => data.password === data.password_confirmation, {
@@ -72,13 +72,13 @@ export const passwordUpdateSchema = object({
         path: ['password_confirmation']
     });
 
-export const passwordResetSchema = object({
-    email: email('ErrorsZod.EmailInvalid'),
-    token: string()
+export const passwordResetSchema = z.object({
+    email: z.email('ErrorsZod.EmailInvalid'),
+    token: z.string()
         .min(1, 'ErrorsZod.TokenRequired'),
-    password: string()
+    password: z.string()
         .min(8, 'ErrorsZod.PasswordMin'),
-    password_confirmation: string()
+    password_confirmation: z.string()
         .min(1, 'ErrorsZod.PasswordConfirmRequired')
 })
     .refine((data) => data.password === data.password_confirmation, {
@@ -86,8 +86,8 @@ export const passwordResetSchema = object({
         path: ['password_confirmation']
     });
 
-export const passwordForgotSchema = object({
-    email: email('ErrorsZod.EmailInvalid')
+export const passwordForgotSchema = z.object({
+    email: z.email('ErrorsZod.EmailInvalid')
 });
 
 export type FormStateCreateAdmin =
