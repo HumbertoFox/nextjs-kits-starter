@@ -97,9 +97,14 @@ export type FormStateCreateAdmin =
             email?: string[];
             password?: string[];
             password_confirmation?: string[];
+            image?: string[];
         }
         message?: boolean;
         warning?: string;
+        meta?: {
+            width?: number;
+            height?: number;
+        };
     } | undefined;
 
 export type FormStateCreateUpdateAdminUser =
@@ -110,8 +115,13 @@ export type FormStateCreateUpdateAdminUser =
             role?: string[];
             password?: string[];
             password_confirmation?: string[];
+            image?: string[];
         }
         message?: boolean;
+        meta?: {
+            width?: number;
+            height?: number;
+        };
     } | undefined;
 
 export type FormStateLoginUser =

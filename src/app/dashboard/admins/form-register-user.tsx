@@ -11,12 +11,15 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { useRouter } from 'next/navigation';
 import { createUpdateAdminUser } from '@/app/api/actions/createupdateadminuser';
 import { useTranslations } from 'next-intl';
+import Image from 'next/image';
+import { handleImageChange } from '@/lib/handleimagechange';
 
 type UserProps = {
     id: string;
     name: string;
     email: string;
     role: string;
+    image?: string;
 }
 
 type RegisterForm = UserProps & {
@@ -34,6 +37,10 @@ export default function RegisterUserForm({ user, isEdit, valueButton }: Register
     const router = useRouter();
     const t = useTranslations('RegisterUserForm');
     const [state, action, pending] = useActionState(createUpdateAdminUser, undefined);
+    const [imageMeta, setImageMeta] = useState<{ width?: number; height?: number } | null>(null);
+    const [imagePreview, setImagePreview] = useState<string | null>(null);
+    const [imageFile, setImageFile] = useState<File | null>(null);
+    const [imageError, setImageError] = useState<string | null>(null);
     const [showPassword, setShowPassword] = useState<boolean>(false);
     const [showPasswordConfirm, setShowPasswordConfirm] = useState<boolean>(false);
     const [data, setData] = useState<RegisterForm>({
@@ -42,18 +49,27 @@ export default function RegisterUserForm({ user, isEdit, valueButton }: Register
         email: user?.email ?? '',
         password: '',
         role: user?.role ?? 'USER',
-        password_confirmation: ''
+        password_confirmation: '',
+        image: user?.image ?? undefined,
     });
 
     const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
         const { id, value } = e.target;
         setData({ ...data, [id]: value });
     };
+    const onImageChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
+        const { file, preview, error, meta } = await handleImageChange(e);
+        setImageFile(file);
+        setImagePreview(preview);
+        setImageError(error);
+        setImageMeta(meta || null);
+    };
     const toggleShowPassword = () => setShowPassword(prev => !prev);
     const toggleShowPasswordConfirm = () => setShowPasswordConfirm(prev => !prev);
     const submit = async (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         const formData = new FormData(e.currentTarget);
+        if (imageFile) formData.append('file', imageFile);
         startTransition(() => action(formData));
     };
     useEffect(() => {
@@ -68,6 +84,7 @@ export default function RegisterUserForm({ user, isEdit, valueButton }: Register
                     password: '',
                     role: 'USER',
                     password_confirmation: '',
+                    image: undefined,
                 });
             }
 
@@ -82,6 +99,68 @@ export default function RegisterUserForm({ user, isEdit, valueButton }: Register
     return (
         <form className="w-full max-w-96 flex flex-col gap-6" onSubmit={submit}>
             <div className="grid gap-6">
+                <div className="grid gap-2">
+                    <Label htmlFor="file">Foto de perfil</Label>
+                    <div className="flex flex-col items-center gap-3">
+                        <div className="relative w-24 h-24 rounded-full overflow-hidden border border-gray-300">
+                            {imagePreview ? (
+                                <Image
+                                    src={imagePreview}
+                                    alt="Preview"
+                                    width={512}
+                                    height={512}
+                                    className="object-cover w-full h-full"
+                                />
+                            ) : (
+                                <div className="w-full h-full flex items-center justify-center text-sm text-gray-400 bg-gray-50">
+                                    Sem imagem
+                                </div>
+                            )}
+                        </div>
+
+                        <Label
+                            htmlFor="file"
+                            className="cursor-pointer px-3 py-1 text-sm border rounded-md hover:bg-gray-50"
+                        >
+                            Selecionar imagem
+                        </Label>
+                        <Input
+                            id="file"
+                            name="file"
+                            type="file"
+                            tabIndex={1}
+                            accept="image/jpeg, image/png, image/webp"
+                            onChange={onImageChange}
+                            disabled={pending}
+                            className="hidden"
+                        />
+                        {imageError && (
+                            <InputError
+                                message={
+                                    imageError === 'DimensionImage'
+                                        ? t(imageError, {
+                                            width: imageMeta?.width ?? 0,
+                                            height: imageMeta?.height ?? 0,
+                                        })
+                                        : t(imageError)
+                                }
+                            />
+                        )}
+                        {state?.errors?.image?.[0] && (
+                            <InputError
+                                message={
+                                    state.errors.image[0] === 'DimensionImage'
+                                        ? t(state.errors.image[0], {
+                                            width: state.meta?.width ?? 0,
+                                            height: state.meta?.height ?? 0,
+                                        })
+                                        : t(state.errors.image[0])
+                                }
+                            />
+                        )}
+                    </div>
+                </div>
+
                 {isEdit && (
                     <div className="grid gap-2">
                         <Label htmlFor="id">{t('IdLabel')}</Label>
@@ -109,7 +188,7 @@ export default function RegisterUserForm({ user, isEdit, valueButton }: Register
                         type="text"
                         required
                         autoFocus
-                        tabIndex={1}
+                        tabIndex={2}
                         autoComplete="name"
                         value={data.name}
                         onChange={handleChange}
@@ -126,7 +205,7 @@ export default function RegisterUserForm({ user, isEdit, valueButton }: Register
                         name="email"
                         type="email"
                         required
-                        tabIndex={2}
+                        tabIndex={3}
                         autoComplete="email"
                         value={data.email}
                         onChange={handleChange}
@@ -143,8 +222,8 @@ export default function RegisterUserForm({ user, isEdit, valueButton }: Register
                             id="password"
                             name="password"
                             type={showPassword ? "text" : "password"}
-                            required={!data.id}
-                            tabIndex={3}
+                            required={!isEdit}
+                            tabIndex={4}
                             value={data.password}
                             onChange={handleChange}
                             disabled={pending}
@@ -169,8 +248,8 @@ export default function RegisterUserForm({ user, isEdit, valueButton }: Register
                             id="password_confirmation"
                             name="password_confirmation"
                             type={showPasswordConfirm ? "text" : "password"}
-                            required={!data.id}
-                            tabIndex={4}
+                            required={!isEdit}
+                            tabIndex={5}
                             value={data.password_confirmation}
                             onChange={handleChange}
                             disabled={pending}
@@ -200,7 +279,7 @@ export default function RegisterUserForm({ user, isEdit, valueButton }: Register
                             id="role"
                             name="role"
                             title={t('RoleTitle')}
-                            tabIndex={5}
+                            tabIndex={6}
                         >
                             <SelectValue placeholder={t('RolePlaceholder')} />
                         </SelectTrigger>
@@ -217,7 +296,7 @@ export default function RegisterUserForm({ user, isEdit, valueButton }: Register
                 </div>
                 <input type="hidden" name="role" value={data.role} />
 
-                <Button type="submit" className="mt-2 w-full" tabIndex={6} disabled={pending} aria-busy={pending}>
+                <Button type="submit" className="mt-2 w-full" tabIndex={7} disabled={pending} aria-busy={pending}>
                     {pending && <LoaderCircle className="h-4 w-4 animate-spin" />}
                     {valueButton}
                 </Button>

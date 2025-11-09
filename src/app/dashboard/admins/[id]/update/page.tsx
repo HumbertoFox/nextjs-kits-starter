@@ -10,18 +10,19 @@ interface UserProps {
     readonly name: string;
     readonly email: string;
     readonly role: string;
+    readonly image: string;
 }
 
 export const generateMetadata = async (): Promise<Metadata> => {
-  const t = await getTranslations('Update.Metadata');
-  return {
-    title: t('Title')
-  };
+    const t = await getTranslations('Update.Metadata');
+    return {
+        title: t('Title')
+    };
 };
 
 export default async function Update({ params }: { params: Promise<{ id: string }> }) {
     const { id } = await params;
-    const user = await prisma.user.findUnique({ where: { id, deletedAt: null }, select: { id: true, name: true, email: true, role: true } });
+    const user = await prisma.user.findUnique({ where: { id, deletedAt: null }, select: { id: true, name: true, email: true, role: true, image: true } });
     const t = await getTranslations('Update');
     return (
         <>

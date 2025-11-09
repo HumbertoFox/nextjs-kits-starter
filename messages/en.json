@@ -40,6 +40,10 @@
         "Warning": "Something went wrong. Please try again later.",
         "WarningUserExisting": "Data already registered",
         "RegisterSuccess": "Account created successfully! Redirecting to the Dashboard, please wait...",
+        "TypeImage": "Only JPEG, PNG, or WebP formats are allowed.",
+        "SizeImage": "The image cannot exceed 512 KB.",
+        "DimensionImage": "The image cannot exceed 512x512px (current: {width}x{height})",
+        "UplodeImageError": "Failed to read the image.",
         "ErrorsZod": {
             "NameRequired": "Name is required",
             "EmailInvalid": "Invalid email address",
@@ -221,6 +225,10 @@
         "RolePlaceholder": "Account Type",
         "RoleItemUser": "User",
         "RoleItemAdmin": "Administrator",
+        "TypeImage": "Only JPEG, PNG, or WebP formats are allowed.",
+        "SizeImage": "The image cannot exceed 512 KB.",
+        "DimensionImage": "The image cannot exceed 512x512px (current: {width}x{height})",
+        "UplodeImageError": "Failed to read the image.",
         "ErrorsZod": {
             "NameRequired": "Name is required",
             "EmailInvalid": "Invalid email address",

@@ -40,6 +40,10 @@
         "Warning": "Algo deu errado. Tente novamente mais tarde.",
         "WarningUserExisting": "Dados já Cadastrados",
         "RegisterSuccess": "Conta criada com Sucesso! Redirecionando para o Painel, aguarde...",
+        "TypeImage": "Apenas JPEG, PNG ou WebP são permitidas.",
+        "SizeImage": "A imagem não pode ultrapassar 512 KB.",
+        "DimensionImage": "A imagem não pode exceder 512x512px (atual: {width}x{height})",
+        "UplodeImageError": "Falha ao ler a imagem.",
         "ErrorsZod": {
             "NameRequired": "Nome é obrigatório",
             "EmailInvalid": "Endereço de e-mail inválido",
@@ -221,6 +225,10 @@
         "RolePlaceholder": "Tipo de conta",
         "RoleItemUser": "usuário",
         "RoleItemAdmin": "Administrador",
+        "TypeImage": "Apenas JPEG, PNG ou WebP são permitidas.",
+        "SizeImage": "A imagem não pode ultrapassar 512 KB.",
+        "DimensionImage": "A imagem não pode exceder 512x512px (atual: {width}x{height})",
+        "UplodeImageError": "Falha ao ler a imagem.",
         "ErrorsZod": {
             "NameRequired": "Nome é obrigatório",
             "EmailInvalid": "Endereço de e-mail inválido",
