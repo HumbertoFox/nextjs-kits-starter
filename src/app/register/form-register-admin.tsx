@@ -57,6 +57,7 @@ export default function RegisterAdmin({ TitleIntl }: { TitleIntl: string }) {
     const toggleShowPasswordConfirm = () => setShowPasswordConfirm(prev => !prev);
     const submit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
+        if (imageError) return;
         const formData = new FormData(e.currentTarget);
         if (imageFile) formData.append('file', imageFile);
         startTransition(() => action(formData));
@@ -80,29 +81,30 @@ export default function RegisterAdmin({ TitleIntl }: { TitleIntl: string }) {
             <form className="flex flex-col gap-6" onSubmit={submit}>
                 <div className="grid gap-6">
                     <div className="grid gap-2">
-                        <Label htmlFor="file">Foto de perfil</Label>
+                        <Label htmlFor="file">{t('ProfilePictureLabel')}</Label>
                         <div className="flex flex-col items-center gap-3">
                             <div className="relative w-24 h-24 rounded-full overflow-hidden border border-gray-300">
                                 {imagePreview ? (
                                     <Image
                                         src={imagePreview}
-                                        alt="Preview"
+                                        alt={t('ImageAlt')}
                                         width={512}
                                         height={512}
                                         className="object-cover w-full h-full"
                                     />
                                 ) : (
                                     <div className="w-full h-full flex items-center justify-center text-sm text-gray-400 bg-gray-50">
-                                        Sem imagem
+                                        {t('NoImage')}
                                     </div>
                                 )}
                             </div>
 
                             <Label
                                 htmlFor="file"
+                                title={imageError ? t('TitleSelectImageError') : t('TitleSelectImage')}
                                 className="cursor-pointer px-3 py-1 text-sm border rounded-md hover:bg-gray-50"
                             >
-                                Selecionar imagem
+                                {t('ImageLabel')}
                             </Label>
                             <Input
                                 id="file"
@@ -231,7 +233,7 @@ export default function RegisterAdmin({ TitleIntl }: { TitleIntl: string }) {
                         {state?.errors?.password_confirmation?.[0] && <InputError message={t(state.errors.password_confirmation[0])} />}
                     </div>
 
-                    <Button type="submit" className="mt-2 w-full" tabIndex={6} disabled={pending} aria-busy={pending}>
+                    <Button type="submit" className="mt-2 w-full" tabIndex={6} disabled={pending || Boolean(imageError)} aria-busy={pending || Boolean(imageError)}>
                         {pending && <LoaderCircle className="h-4 w-4 animate-spin" />}
                         {t('Submit')}
                     </Button>
