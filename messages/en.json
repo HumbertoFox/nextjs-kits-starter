@@ -287,12 +287,21 @@
         "TextParagrafPrimary": "Your email address is unverified.",
         "Submit": "Click here to resend the verification email.",
         "TextParagrafSecond": "A new verification link has been sent to your email address.",
+        "ProfilePictureLabel": "Profile picture (optional)",
+        "ImageAlt": "Preview image Profile",
+        "NoImage": "No image",
+        "ImageLabel": "Select image",
+        "TitleSelectImageError": "Click on Select image and then Cancel.",
+        "TitleSelectImage": "Select profile picture",
         "ButtonSave": "Save",
         "Saved": "Saved",
         "ErrorsZod": {
             "NameRequired": "Name is required",
             "EmailInvalid": "Invalid email",
-            "EmailAlreadyUse": "This email is already in use"
+            "EmailAlreadyUse": "This email is already in use",
+            "TypesImageSuported": "Only JPEG, PNG, or WebP formats are allowed.",
+            "MaxImageSize": "The image cannot exceed 512 KB.",
+            "UploadImageError": "Error sending image. Please try again."
         }
     },
     "DeleteUser": {

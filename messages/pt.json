@@ -287,12 +287,21 @@
         "TextParagrafPrimary": "Seu endereço de e-mail não foi verificado.",
         "Submit": "Clique aqui para reenviar o e-mail de verificação.",
         "TextParagrafSecond": "Um novo link de verificação foi enviado para seu endereço de e-mail.",
+        "ProfilePictureLabel": "Foto de perfil (opcional)",
+        "ImageAlt": "Pré-visualização da imagem de perfil",
+        "NoImage": "Sem imagem",
+        "ImageLabel": "Selecionar imagem",
+        "TitleSelectImageError": "Click em Selecionar imagem e em Cancelar",
+        "TitleSelectImage": "Selecionar imagem de perfil",
         "ButtonSave": "Salvar",
         "Saved": "Salvo",
         "ErrorsZod": {
             "NameRequired": "Nome é obrigatório",
             "EmailInvalid": "E-mail inválido",
-            "EmailAlreadyUse": "Este e-mail já está em uso"
+            "EmailAlreadyUse": "Este e-mail já está em uso",
+            "TypesImageSuported": "Apenas JPEG, PNG ou WebP são permitidas.",
+            "MaxImageSize": "A imagem não pode ultrapassar 512 KB.",
+            "UploadImageError": "Erro ao enviar imagem. Tente novamente."
         }
     },
     "DeleteUser": {

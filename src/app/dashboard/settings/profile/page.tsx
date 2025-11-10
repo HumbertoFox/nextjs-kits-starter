@@ -14,6 +14,6 @@ export default async function Profile() {
     const user = await getUser();
     if (!user) return null;
     return (
-        <ProfilePageClient name={user.name} email={user.email} mustVerifyEmail={!user.emailVerified} />
+        <ProfilePageClient name={user.name} email={user.email} image={user.image} mustVerifyEmail={!user.emailVerified} />
     );
 }

@@ -157,6 +157,7 @@ export type FormStateUserUpdate =
         errors?: {
             name?: string[];
             email?: string[];
+            image?: string[];
         };
         message?: string;
         success?: boolean;
