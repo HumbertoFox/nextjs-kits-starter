@@ -36,7 +36,7 @@ export default async function Users(props: { searchParams?: Promise<{ page?: num
             take: pageSize,
         }),
         prisma.user.count({
-            where: { role: 'USER', deletedAt: null },
+            where: { role: 'USER', },
         }),
     ]);
     const totalPages = Math.ceil(totalUsers / pageSize);
@@ -150,44 +150,46 @@ export default async function Users(props: { searchParams?: Promise<{ page?: num
                     </Table>
                 </div>
             </div>
-            <Pagination className="pb-2.5">
-                <PaginationContent>
-                    <PaginationItem>
-                        <PaginationPrevious
-                            href={currentPage > 1 ? `?page=${currentPage - 1}` : '#'}
-                            aria-disabled={currentPage <= 1}
-                            className={currentPage <= 1 ? 'pointer-events-none opacity-50' : ''}
-                        />
-                    </PaginationItem>
-                    {getVisiblePagination(currentPage, totalPages).map((page, index) => (
-                        <PaginationItem key={index}>
-                            {page === '...' ? (
-                                <PaginationLink
-                                    href="#"
-                                    aria-disabled
-                                    className="pointer-events-none opacity-50"
-                                >
-                                    ...
-                                </PaginationLink>
-                            ) : (
-                                <PaginationLink
-                                    href={`?page=${page}`}
-                                    isActive={currentPage === page}
-                                >
-                                    {page}
-                                </PaginationLink>
-                            )}
+            {totalPages > 1 && (
+                <Pagination className="pb-2.5">
+                    <PaginationContent>
+                        <PaginationItem>
+                            <PaginationPrevious
+                                href={currentPage > 1 ? `?page=${currentPage - 1}` : '#'}
+                                aria-disabled={currentPage <= 1}
+                                className={currentPage <= 1 ? 'pointer-events-none opacity-50' : ''}
+                            />
                         </PaginationItem>
-                    ))}
-                    <PaginationItem>
-                        <PaginationNext
-                            href={currentPage < totalPages ? `?page=${currentPage + 1}` : '#'}
-                            aria-disabled={currentPage >= totalPages}
-                            className={currentPage >= totalPages ? 'pointer-events-none opacity-50' : ''}
-                        />
-                    </PaginationItem>
-                </PaginationContent>
-            </Pagination>
+                        {getVisiblePagination(currentPage, totalPages).map((page, index) => (
+                            <PaginationItem key={index}>
+                                {page === '...' ? (
+                                    <PaginationLink
+                                        href="#"
+                                        aria-disabled
+                                        className="pointer-events-none opacity-50"
+                                    >
+                                        ...
+                                    </PaginationLink>
+                                ) : (
+                                    <PaginationLink
+                                        href={`?page=${page}`}
+                                        isActive={currentPage === page}
+                                    >
+                                        {page}
+                                    </PaginationLink>
+                                )}
+                            </PaginationItem>
+                        ))}
+                        <PaginationItem>
+                            <PaginationNext
+                                href={currentPage < totalPages ? `?page=${currentPage + 1}` : '#'}
+                                aria-disabled={currentPage >= totalPages}
+                                className={currentPage >= totalPages ? 'pointer-events-none opacity-50' : ''}
+                            />
+                        </PaginationItem>
+                    </PaginationContent>
+                </Pagination>
+            )}
         </>
     );
 }

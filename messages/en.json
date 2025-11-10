@@ -214,6 +214,7 @@
         }
     },
     "RegisterUserForm": {
+        "ProfilePictureLabel": "Profile picture (optional)",
         "ImageAlt": "Preview image Profile",
         "NoImage": "No image",
         "ImageLabel": "Select image",

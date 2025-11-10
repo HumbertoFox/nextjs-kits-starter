@@ -214,6 +214,7 @@
         }
     },
     "RegisterUserForm": {
+        "ProfilePictureLabel": "Foto de perfil (opcional)",
         "ImageAlt": "Pré-visualização da imagem de perfil",
         "NoImage": "Sem imagem",
         "ImageLabel": "Selecionar imagem",
@@ -234,7 +235,7 @@
         "RoleLabel": "Tipo de conta",
         "RoleTitle": "Selecione o tipo de conta",
         "RolePlaceholder": "Tipo de conta",
-        "RoleItemUser": "usuária(o)",
+        "RoleItemUser": "Usuária(o)",
         "RoleItemAdmin": "Administrador(a)",
         "TypeImage": "Apenas JPEG, PNG ou WebP são permitidas.",
         "SizeImage": "A imagem não pode ultrapassar 512 KB.",

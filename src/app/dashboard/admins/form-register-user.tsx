@@ -298,7 +298,7 @@ export default function RegisterUserForm({ user, isEdit, valueButton }: Register
                 </div>
                 <input type="hidden" name="role" value={data.role} />
 
-                <Button type="submit" className="mt-2 w-full" tabIndex={7} disabled={pending} aria-busy={pending}>
+                <Button type="submit" className="mt-2 w-full" tabIndex={7} disabled={pending || Boolean(imageError)} aria-busy={pending || Boolean(imageError)}>
                     {pending && <LoaderCircle className="h-4 w-4 animate-spin" />}
                     {valueButton}
                 </Button>
