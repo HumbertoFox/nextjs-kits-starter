@@ -161,6 +161,10 @@ export type FormStateUserUpdate =
         };
         message?: string;
         success?: boolean;
+        meta?: {
+            width?: number;
+            height?: number;
+        };
     } | undefined;
 
 export type FormStatePasswordForgot =

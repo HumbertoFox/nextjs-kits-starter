@@ -293,15 +293,16 @@
         "ImageLabel": "Select image",
         "TitleSelectImageError": "Click on Select image and then Cancel.",
         "TitleSelectImage": "Select profile picture",
+        "TypeImage": "Only JPEG, PNG, or WebP formats are allowed.",
+        "SizeImage": "The image cannot exceed 512 KB.",
+        "DimensionImage": "The image cannot exceed 512x512px (current: {width}x{height})",
+        "UplodeImageError": "Failed to read the image.",
         "ButtonSave": "Save",
         "Saved": "Saved",
         "ErrorsZod": {
             "NameRequired": "Name is required",
             "EmailInvalid": "Invalid email",
-            "EmailAlreadyUse": "This email is already in use",
-            "TypesImageSuported": "Only JPEG, PNG, or WebP formats are allowed.",
-            "MaxImageSize": "The image cannot exceed 512 KB.",
-            "UploadImageError": "Error sending image. Please try again."
+            "EmailAlreadyUse": "This email is already in use"
         }
     },
     "DeleteUser": {

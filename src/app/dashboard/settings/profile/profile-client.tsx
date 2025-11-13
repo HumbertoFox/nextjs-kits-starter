@@ -33,7 +33,8 @@ export default function ProfilePageClient({ name, email, image, mustVerifyEmail 
     const { setBreadcrumbs } = useBreadcrumbs();
     const [state, action, pending] = useActionState(updateUser, undefined);
     const [status, setStatus] = useState<string | null>(null);
-    const [imagePreview, setImagePreview] = useState<string | null>(image ?? null);
+    const [imageMeta, setImageMeta] = useState<{ width?: number; height?: number } | null>(null);
+    const [imagePreview, setImagePreview] = useState<string | null | undefined>(image ?? null);
     const [imageFile, setImageFile] = useState<File | null>(null);
     const [imageError, setImageError] = useState<string | null>(null);
     const [recentlySuccessful, setRecentlySuccessful] = useState<boolean>(false);
@@ -48,11 +49,17 @@ export default function ProfilePageClient({ name, email, image, mustVerifyEmail 
         setData({ ...data, [id]: value });
     };
     const onImageChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
-        const { file, preview, error } = await handleImageChange(e);
+        const { file, preview, error, meta } = await handleImageChange(e);
         setImageFile(file);
-        setImagePreview(preview);
+        setImagePreview(preview || image);
         setImageError(error);
+        setImageMeta(meta || null);
     };
+    useEffect(() => {
+        return () => {
+            if (imagePreview && imagePreview.startsWith('blob:')) URL.revokeObjectURL(imagePreview);
+        };
+    }, [imagePreview]);
     const submit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         if (imageError) return;
@@ -86,10 +93,9 @@ export default function ProfilePageClient({ name, email, image, mustVerifyEmail 
         <>
             <div className="space-y-6">
                 <HeadingSmall title={t('Title')} description={t('Description')} />
-
                 <form onSubmit={submit} className="space-y-6">
                     <div className="flex flex-col-reverse justify-between lg:flex-row gap-6">
-                        <div className="flex flex-col flex-1 gap-6">
+                        <div className="min-w-2/3 flex flex-col flex-1 gap-6">
                             <div className="grid gap-2">
                                 <Label htmlFor="name">{t('NameLabel')}</Label>
                                 <Input
@@ -182,8 +188,30 @@ export default function ProfilePageClient({ name, email, image, mustVerifyEmail 
                                     disabled={pending}
                                     className="hidden"
                                 />
-                                {imageError && <InputError message={imageError} />}
-                                {state?.errors?.image?.[0] && <InputError message={state.errors.image[0]} />}
+                                {imageError && (
+                                    <InputError
+                                        message={
+                                            imageError === 'DimensionImage'
+                                                ? t(imageError, {
+                                                    width: imageMeta?.width ?? 0,
+                                                    height: imageMeta?.height ?? 0,
+                                                })
+                                                : t(imageError)
+                                        }
+                                    />
+                                )}
+                                {state?.errors?.image?.[0] && (
+                                    <InputError
+                                        message={
+                                            state.errors.image[0] === 'DimensionImage'
+                                                ? t(state.errors.image[0], {
+                                                    width: state.meta?.width ?? 0,
+                                                    height: state.meta?.height ?? 0,
+                                                })
+                                                : t(state.errors.image[0])
+                                        }
+                                    />
+                                )}
                             </div>
                         </div>
                     </div>

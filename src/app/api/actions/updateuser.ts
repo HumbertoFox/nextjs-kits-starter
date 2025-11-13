@@ -7,8 +7,10 @@ import { redirect } from 'next/navigation';
 import z from 'zod';
 import { put, del } from '@vercel/blob';
 import crypto from 'crypto';
+import sharp from 'sharp';
 
 const MAX_FILE_SIZE = 512 * 1024;
+const MAX_DIMENSION = 512;
 const ALLOWED_TYPES = ['image/jpeg', 'image/png', 'image/webp'];
 
 export async function updateUser(state: FormStateUserUpdate, formData: FormData): Promise<FormStateUserUpdate> {
@@ -34,9 +36,23 @@ export async function updateUser(state: FormStateUserUpdate, formData: FormData)
     if (sessionUser.email !== email) dataToUpdate.email = email;
 
     if (file && file.size > 0) {
-        if (!ALLOWED_TYPES.includes(file.type)) return { errors: { image: ['ErrorsZod.TypesImageSuported'] } };
+        if (!ALLOWED_TYPES.includes(file.type)) return { errors: { image: ['TypeImage'] } };
 
-        if (file.size > MAX_FILE_SIZE) return { errors: { image: ['ErrorsZod.MaxImageSize'] } };
+        if (file.size > MAX_FILE_SIZE) return { errors: { image: ['SizeImage'] } };
+
+        try {
+            const buffer = Buffer.from(await file.arrayBuffer());
+            const metadata = await sharp(buffer).metadata();
+            const { width, height } = metadata;
+            if (width > MAX_DIMENSION || height > MAX_DIMENSION) {
+                return {
+                    errors: { image: ['DimensionImage'] },
+                    meta: { width, height },
+                };
+            };
+        } catch {
+            return { errors: { image: ['UplodeImageError'] } };
+        }
 
         try {
             if (sessionUser.image) {
@@ -60,7 +76,7 @@ export async function updateUser(state: FormStateUserUpdate, formData: FormData)
             }
         } catch (error) {
             console.error('Error sending image.:', error);
-            return { errors: { image: ['ErrorsZod.UploadImageError'] } };
+            return { errors: { image: ['UplodeImageError'] } };
         }
     }
 
