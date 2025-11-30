@@ -7,6 +7,11 @@
   <a href="https://nextjs.org/"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/nextjs/nextjs-original.svg" width="130px" alt="Icon NextJs" /></a>
 
 ## About NextJS
+
+  <a href="https://www.prisma.io/"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/prisma/prisma-original.svg" width="130px" alt="Icon Prisma" /></a>
+
+## About o Prisma
+
 ### Authentication!
 
 ---
