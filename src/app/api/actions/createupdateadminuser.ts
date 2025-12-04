@@ -97,7 +97,7 @@ export async function createUpdateAdminUser(state: FormStateCreateUpdateAdminUse
 
             const newUser = await prisma.user.create({ data: { name, email, role, password: hashedPassword!, ...(imageUrl && { image: imageUrl }), } });
 
-            revalidatePath(newUser.role);
+            revalidatePaths(newUser.role);
 
             return { message: true };
         }
