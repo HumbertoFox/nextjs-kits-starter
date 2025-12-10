@@ -4,6 +4,7 @@ import Image from 'next/image';
 import gsap from 'gsap';
 import { useEffect, useRef } from 'react';
 import { useTranslations } from 'next-intl';
+import { Plus } from 'lucide-react';
 
 export default function HomeMainComponent() {
     const t = useTranslations('Welcome');
@@ -54,15 +55,30 @@ export default function HomeMainComponent() {
     }, []);
     return (
         <main ref={containerRef} className="flex flex-col gap-8 row-start-2 items-center sm:items-start max-w-[1440px]">
-            <div className="logo opacity-0">
-                <Image
-                    className="dark:invert"
-                    src="/next.svg"
-                    alt="Next.js logo"
-                    width={180}
-                    height={38}
-                    priority
-                />
+            <div className="flex gap-4">
+                <div className="logo flex opacity-0">
+                    <Image
+                        className="dark:invert"
+                        src="/next.svg"
+                        alt="Next.js logo"
+                        width={180}
+                        height={38}
+                        priority
+                    />
+                </div>
+                <div className="logo flex items-center opacity-0">
+                    <Plus />
+                </div>
+                <div className="logo flex opacity-0">
+                    <Image
+                        className="dark:invert"
+                        src="/vercel-original.svg"
+                        alt="Vercel logo"
+                        width={180}
+                        height={38}
+                        priority
+                    />
+                </div>
             </div>
             <ol className="list-inside list-decimal text-sm/6 text-center sm:text-left font-family-name:var(--font-geist-mono)">
                 <li className="list-item mb-2 tracking-[-.01em] opacity-0">
