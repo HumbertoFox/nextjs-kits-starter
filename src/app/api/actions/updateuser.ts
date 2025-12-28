@@ -25,7 +25,7 @@ export async function updateUser(state: FormStateUserUpdate, formData: FormData)
     const { name, email } = validatedFields.data;
     const sessionUser = await getUser();
 
-    if (!sessionUser?.id) return redirect('/');
+    if (!sessionUser || !sessionUser?.id) return redirect('/');
 
     const emailInUse = await prisma.user.findUnique({ where: { email } });
 

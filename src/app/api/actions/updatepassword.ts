@@ -20,7 +20,7 @@ export async function updatePassword(state: FormStatePasswordUpdate, formData: F
 
     const sessionUser = await getUser();
 
-    if (!sessionUser?.id) return redirect('/');
+    if (!sessionUser || !sessionUser?.id) return redirect('/');
 
     const authUser = await prisma.user.findUnique({ where: { id: sessionUser.id } });
 
